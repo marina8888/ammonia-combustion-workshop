@@ -1,23 +1,23 @@
 from ember import *
-import maplotlib.pyplot as plt
+import cantera as ct
 
 def main():
     conf = Config(
-        Paths(outputDir='C:\Users\{your-username}\Documents\Ember-files\Flux'),
+        Paths(outputDir='C:\Users\C1500120\Documents\Ember-files\Flux'),
         InitialCondition(fuel='CH4:1.0',
                          equivalenceRatio=0.70),
         StrainParameters(initial=400,
                          final=400),
-        Chemistry(mechanismFile='C:\Users\{your-username}\Documents\ember-files\mechanisms\gri.cti', transportModel = 'Multi'),
+        Chemistry(mechanismFile='C:\Users\C1500120\Documents\Ember-files\mechanisms\gri.cti', transportModel = 'Multi'),
         TerminationCondition(tEnd=0.010))
     conf.run()
 
-    filename = 'C:\Users\{your-username}\Documents\ember-files\flux\prof000007.h5'
+    filename = 'C:\Users\C1500120\Documents\Ember-files\Flux\prof000003.h5'
     s = utils.load(filename)
-    gas_obj = ct.Solution("src/mech/gri-3.0.cti")
+    gas_obj = ct.Solution('C:\Users\C1500120\Documents\Ember-files\mechanisms\gri.cti')
     gas_obj.transport_model = 'multicomponent'
 
-    print(f' testing species {gas_obj.species_names[0]}')
+    # print(f' testing species {gas_obj.species_names[0]}')
     utils.expandProfile(s, gas_obj, diffusion=True, reaction_rates=True)
 
     Z = np.zeros(s.T.shape)
@@ -28,10 +28,6 @@ def main():
         gas_obj.TPY = s.T[n], s.P, s.Y[:, n]
         Z[n] = gas_obj.mixture_fraction(fuel = 'CH4:1.0', oxidizer='O2:0.21, N2:0.79')
 
-    plt.plot(s.x, Z)
-    plt.show()
-
 if __name__ == '__main__':
     main()
-
 
