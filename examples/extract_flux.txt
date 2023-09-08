@@ -12,10 +12,10 @@ def main():
         TerminationCondition(tEnd=0.010))
     conf.run()
 
-    gas_obj.transport_model = 'multicomponent'
     filename = 'src/solutions/prof000007.h5'
     s = utils.load(filename)
     gas_obj = ct.Solution("src/mech/gri-3.0.cti")
+    gas_obj.transport_model = 'multicomponent'
 
     print(f' testing species {gas_obj.species_names[0]}')
     utils.expandProfile(s, gas_obj, diffusion=True, reaction_rates=True)
