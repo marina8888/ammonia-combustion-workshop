@@ -3,7 +3,7 @@ import cantera as ct
 
 def main():
     conf = Config(
-        Paths(outputDir='C:\Users\C1500120\Documents\Ember-files\Flux'),
+        Paths(outputDir='C:\Users\{your-username}\Documents\Ember-files\Flux'),
         InitialCondition(fuel='CH4:1.0',
                          equivalenceRatio=0.70),
         StrainParameters(initial=400,
@@ -15,7 +15,6 @@ def main():
     filename = 'C:\Users\{your-username}\Documents\Ember-files\Flux\prof000003.h5'
     s = utils.load(filename)
     gas_obj = ct.Solution('C:\Users\{your-username}\Documents\Ember-files\mechanisms\gri.cti')
-    gas_obj.transport_model = 'multicomponent'
 
     # print(f' testing species {gas_obj.species_names[0]}')
     utils.expandProfile(s, gas_obj, diffusion=True, reaction_rates=True)
