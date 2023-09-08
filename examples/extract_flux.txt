@@ -1,16 +1,37 @@
-import matplotlib.pyplot as plt
+import ember as *
+import maplotlib.pyplot as plt
 
-filename = 'src/solutions/prof000007.h5'
-s = utils.load(filename)
-gas_obj = ct.Solution("src/mech/gri-3.0.cti")
+def main():
+    conf = Config(
+        Paths(outputDir='src/solutions'),
+        InitialCondition(fuel='CH4:1.0',
+                         equivalenceRatio=0.70),
+        StrainParameters(initial=400,
+                         final=400),
+        Chemistry(mechanismFile="src/mech/gri-3.0.cti", transportModel = ''Multi'),
+        TerminationCondition(tEnd=0.010))
+    conf.run()
 
-print(f' testing species {gas_obj.species_names[0]}')
-utils.expandProfile(s, gas_obj, diffusion=True, reaction_rates=True)
+    gas_obj.transport_model = 'multicomponent'
+    filename = 'src/solutions/prof000007.h5'
+    s = utils.load(filename)
+    gas_obj = ct.Solution("src/mech/gri-3.0.cti")
 
-plt.title('Fickian Diffusion Flux')
-plt.plot(s.x, s.jFick[0,:])
-plt.show()
+    print(f' testing species {gas_obj.species_names[0]}')
+    utils.expandProfile(s, gas_obj, diffusion=True, reaction_rates=True)
 
-plt.title('Soret Diffusion Flux')
-plt.plot(s.x, s.jSoret[0,:])
-plt.show()
+    Z = np.zeros(s.T.shape)
+
+    # fill mixture fraction:
+    for n in range(len(s.x)):
+        print(n)
+        gas_obj.TPY = s.T[n], s.P, s.Y[:, n]
+        Z[n] = gas_obj.mixture_fraction(fuel = 'CH4:1.0', oxidizer='O2:0.21, N2:0.79')
+
+    plt.plot(s.x, Z)
+    plt.show()
+
+if __name__ == '__main__':
+    main()
+
+
