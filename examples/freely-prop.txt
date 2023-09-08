@@ -1,7 +1,7 @@
 from ember import *
 
 conf = Config(
-    Paths(outputDir='C:\Users\{your-username}\Documents\ember-files\freely-prop'),
+    Paths(outputDir='C:\Users\{your-username}\Documents\Ember-files\Freely-prop'),
     InitialCondition(fuel='CH4:1.0',
                      oxidizer='O2:1, N2:3.76',
                      equivalenceRatio=0.9,
