@@ -3,16 +3,16 @@ import maplotlib.pyplot as plt
 
 def main():
     conf = Config(
-        Paths(outputDir='src/solutions'),
+        Paths(outputDir='C:\Users\{your-username}\Documents\ember-files\flux'),
         InitialCondition(fuel='CH4:1.0',
                          equivalenceRatio=0.70),
         StrainParameters(initial=400,
                          final=400),
-        Chemistry(mechanismFile="src/mech/gri-3.0.cti", transportModel = ''Multi'),
+        Chemistry(mechanismFile='C:\Users\{your-username}\Documents\ember-files\mechanisms\gri.cti', transportModel = 'Multi'),
         TerminationCondition(tEnd=0.010))
     conf.run()
 
-    filename = 'src/solutions/prof000007.h5'
+    filename = 'C:\Users\{your-username}\Documents\ember-files\flux\prof000007.h5'
     s = utils.load(filename)
     gas_obj = ct.Solution("src/mech/gri-3.0.cti")
     gas_obj.transport_model = 'multicomponent'
