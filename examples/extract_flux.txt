@@ -1,0 +1,16 @@
+import matplotlib.pyplot as plt
+
+filename = 'src/solutions/prof000007.h5'
+s = utils.load(filename)
+gas_obj = ct.Solution("src/mech/gri-3.0.cti")
+
+print(f' testing species {gas_obj.species_names[0]}')
+utils.expandProfile(s, gas_obj, diffusion=True, reaction_rates=True)
+
+plt.title('Fickian Diffusion Flux')
+plt.plot(s.x, s.jFick[0,:])
+plt.show()
+
+plt.title('Soret Diffusion Flux')
+plt.plot(s.x, s.jSoret[0,:])
+plt.show()
