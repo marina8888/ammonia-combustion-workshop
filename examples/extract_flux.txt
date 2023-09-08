@@ -1,4 +1,4 @@
-import ember as *
+from ember import *
 import maplotlib.pyplot as plt
 
 def main():
